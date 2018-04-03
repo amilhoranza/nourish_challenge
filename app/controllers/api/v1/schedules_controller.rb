@@ -17,13 +17,6 @@ class Api::V1::SchedulesController < Api::V1::BaseController
   def create
     schedule = current_user.schedules.build(schedule_params)
 
-    # Saving appointments for this schedule
-    recurrencies = Recurrence.new(:every => :day, :starts => schedule.starting_on, :until => schedule.ending_on, :interval => schedule.interval)
-    recurrencies.events.each do |date|
-      schedule.appointments.build(schedule_id: schedule.id, when: "#{date} #{schedule.starting_on.strftime('%T')}", note: schedule.note)
-    end
-
-
     if schedule.save
       render json: schedule, status: 201
     else
