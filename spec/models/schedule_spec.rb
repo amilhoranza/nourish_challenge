@@ -4,6 +4,8 @@ RSpec.describe Schedule, type: :model do
 
   let(:schedule) { build(:schedule) }
 
+  it { is_expected.to have_many(:appointments) }
+
   it { is_expected.to validate_presence_of(:starting_on) }
 
   it { is_expected.to validate_presence_of(:ending_on) }
@@ -35,6 +37,5 @@ RSpec.describe Schedule, type: :model do
   context "when interval is not an number" do
     it {should_not allow_value('abb').for(:interval)}
   end
-
 
 end
